@@ -21,8 +21,8 @@ def get_parse_args():
 
     parser.add_argument("-l", "--location", help="location", action="store",
                         type=str, default=None)
-    parser.add_argument("-o", "--override", help="override", action="store",
-                        type=bool, default=False)
+    # parser.add_argument("-o", "--override", help="override", action="store",
+    #                     type=bool, default=False)
 
     args = parser.parse_args()
 
@@ -30,8 +30,7 @@ def get_parse_args():
         database=args.database,
         table=args.table,
         partitions=args.partitions,
-        location=args.location,
-        override=args.override
+        location=args.location
     )
 
 
@@ -57,9 +56,6 @@ if __name__ == '__main__':
                                location=request.location)
     check(request)
 
-    if request.override:
-        athena_alter.drop_partition()
-        athena_alter.add_partition()
-    else:
-        athena_alter.add_partition()
+    athena_alter.drop_partition()
+    athena_alter.add_partition()
     athena_alter.refresh_partition()
