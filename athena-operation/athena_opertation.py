@@ -3,6 +3,9 @@
 import argparse
 
 from ddl.alter_partition import AthenaAlter
+from utils.log_utils import LogUtil
+
+log = LogUtil()
 
 
 def get_parse_args():
@@ -43,4 +46,11 @@ class AddPartitionRequest(object):
 
 if __name__ == '__main__':
     request = get_parse_args()
-    AthenaAlter(database=request.database, table=request.table, )
+    athena_alter = AthenaAlter(database=request.database, table=request.table, partition_str=request.partitions,
+                               location=request.location)
+    if request.override:
+        athena_alter.drop_partition()
+        athena_alter.add_partition()
+    else:
+        athena_alter.add_partition()
+    athena_alter.refresh_partition()
