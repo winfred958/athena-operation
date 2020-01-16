@@ -58,4 +58,4 @@ class AthenaAlter(BaseDao):
         self.execute_sql(sql)
 
     def get_operation_tag(self):
-        return "add_partition"
+        return "alert_partition"
