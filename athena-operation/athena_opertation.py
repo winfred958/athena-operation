@@ -11,8 +11,8 @@ log = LogUtil()
 
 def get_parse_args():
     # 获取参数
-    parser = argparse.ArgumentParser(description="google cloud operation")
-    parser.add_argument("-ac", "--all-config", help="database", action="store",
+    parser = argparse.ArgumentParser(description="athena operation")
+    parser.add_argument("-ac", "--all-config", help="load partition info from config file", action="store",
                         type=str, default=None, required=False)
     parser.add_argument("-d", "--database", help="database", action="store",
                         type=str, required=False)
@@ -65,8 +65,11 @@ if __name__ == '__main__':
                                location=request.location)
     try:
         check(request)
-        athena_alter.drop_partition()
-        athena_alter.add_partition()
+        if request.override:
+            athena_alter.drop_partition()
+            athena_alter.add_partition()
+        else:
+            athena_alter.add_partition()
         athena_alter.refresh_partition()
     except Exception:
         log.error("[failed] : {}", Exception)
