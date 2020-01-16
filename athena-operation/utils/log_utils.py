@@ -30,7 +30,7 @@ class LogUtil(object):
             formater = logging.Formatter(
                 "%(asctime)s %(levelname)-6s: [%(filename)s %(funcName)s %(lineno)d] :%(message)s")
 
-            log_dir_path = "{}/../{}".format(os.getcwd(), config.LOG_DIR_NAME)
+            log_dir_path = "{}/{}".format(os.getcwd(), config.LOG_DIR_NAME)
 
             if os.path.exists(log_dir_path) and os.path.isdir(log_dir_path):
                 pass

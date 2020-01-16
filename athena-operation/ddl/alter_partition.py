@@ -19,17 +19,13 @@ class AthenaAlter(BaseDao):
         :return:
         """
         if self.location is None:
-            sql = """
-            ALTER TABLE {database}.{table} ADD IF NOT EXISTS PARTITION ({partition})'
-            """.format(
+            sql = "ALTER TABLE {database}.{table} ADD IF NOT EXISTS PARTITION ({partition})'".format(
                 database=self.database,
                 table=self.table,
                 partition=self.partition_str
             )
         else:
-            sql = """
-            ALTER TABLE {database}.{table} ADD IF NOT EXISTS PARTITION ({partition}) LOCATION '{location}'
-            """.format(
+            sql = "ALTER TABLE {database}.{table} ADD IF NOT EXISTS PARTITION ({partition}) LOCATION '{location}'".format(
                 database=self.database,
                 table=self.table,
                 partition=self.partition_str,
@@ -43,9 +39,7 @@ class AthenaAlter(BaseDao):
         :return:
         """
 
-        sql = """
-        ALTER TABLE {database}.{table} DROP IF EXISTS PARTITION ({partition})
-        """.format(
+        sql = "ALTER TABLE {database}.{table} DROP IF EXISTS PARTITION ({partition})".format(
             database=self.database,
             table=self.table,
             partition=self.partition_str,
