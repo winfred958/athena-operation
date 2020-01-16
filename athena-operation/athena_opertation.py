@@ -14,9 +14,9 @@ def get_parse_args():
     parser.add_argument("-ac", "--all-config", help="database", action="store",
                         type=str, default=None, required=False)
     parser.add_argument("-d", "--database", help="database", action="store",
-                        type=str, required=True)
+                        type=str, required=False)
     parser.add_argument("-t", "--table", help="table", action="store",
-                        type=str, required=True)
+                        type=str, required=False)
 
     parser.add_argument("-p", "--partitions", help="k1=v1,k2=v2,k3=v3", action="store",
                         type=str, default=None)
