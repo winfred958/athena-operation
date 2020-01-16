@@ -23,6 +23,7 @@ def get_parse_args():
 
     parser.add_argument("-l", "--location", help="location", action="store",
                         type=str, default=None)
+
     parser.add_argument("-o", "--override", help="override", action="store",
                         type=bool, default=False, required=False)
 
@@ -32,7 +33,8 @@ def get_parse_args():
         database=args.database,
         table=args.table,
         partitions=args.partitions,
-        location=args.location
+        location=args.location,
+        override=args.override
     )
 
 
