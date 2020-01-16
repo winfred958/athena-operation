@@ -59,8 +59,10 @@ if __name__ == '__main__':
     log.info("request: {}".format(request))
     athena_alter = AthenaAlter(database=request.database, table=request.table, partition_str=request.partitions,
                                location=request.location)
-    check(request)
-
-    athena_alter.drop_partition()
-    athena_alter.add_partition()
-    athena_alter.refresh_partition()
+    try:
+        check(request)
+        athena_alter.drop_partition()
+        athena_alter.add_partition()
+        athena_alter.refresh_partition()
+    except Exception:
+        log.error("[failed] : {}", Exception)
