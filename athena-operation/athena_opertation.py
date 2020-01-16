@@ -2,6 +2,8 @@
 
 import argparse
 
+from ddl.alter_partition import AthenaAlter
+
 
 def get_parse_args():
     # 获取参数
@@ -17,7 +19,7 @@ def get_parse_args():
     parser.add_argument("-l", "--location", help="location", action="store",
                         type=str, default=None)
     parser.add_argument("-o", "--override", help="override", action="store",
-                        type=str, default=None)
+                        type=bool, default=False)
 
     args = parser.parse_args()
 
@@ -25,17 +27,20 @@ def get_parse_args():
         database=args.database,
         table=args.table,
         partitions=args.partitions,
-        location=args.location
+        location=args.location,
+        override=args.override
     )
 
 
 class AddPartitionRequest(object):
-    def __init__(self, database, table, partitions, location):
+    def __init__(self, database, table, partitions, location, override):
         self.database = database
         self.table = table
         self.partitions = partitions
         self.location = location
+        self.override = override
 
 
 if __name__ == '__main__':
     request = get_parse_args()
+    AthenaAlter(database=request.database, table=request.table, )
