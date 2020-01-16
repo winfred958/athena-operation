@@ -7,7 +7,7 @@ from config import auth_config
 from config import config
 
 
-class Connector(object):
+class AthenaConnector(object):
     """
 
     """
@@ -37,3 +37,38 @@ class Connector(object):
 
         athena = boto3.client(**conf)
         return athena
+
+    def execute_sql(
+            self,
+            request  # type: AthenaRequestEntity
+    ):
+        """
+
+        :param content:
+        QueryString : sql
+        QueryExecutionContext: database
+        ResultConfiguration:
+        :return:
+        """
+        self.get_athena_connector().start_query_execution(**request.get_parameter())
+
+
+class AthenaRequestEntity(object):
+
+    def __init__(self, sql, database, result_path):
+        self.sql = sql
+        self.database = database
+        self.result_path = result_path
+
+    def get_parameter(self):
+        query_execution_context = {
+            "Database": self.database
+        }
+        result_configuration = {
+            "OutputLocation": self.result_path
+        }
+        return {
+            "QueryString": self.sql,
+            "QueryExecutionContext": query_execution_context,
+            "ResultConfiguration": result_configuration
+        }
