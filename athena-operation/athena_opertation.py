@@ -56,6 +56,7 @@ def check(
 
 if __name__ == '__main__':
     request = get_parse_args()
+    log.info("request: {}".format(request))
     athena_alter = AthenaAlter(database=request.database, table=request.table, partition_str=request.partitions,
                                location=request.location)
     check(request)
