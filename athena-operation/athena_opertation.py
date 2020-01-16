@@ -11,18 +11,18 @@ log = LogUtil()
 def get_parse_args():
     # 获取参数
     parser = argparse.ArgumentParser(description="google cloud operation")
-    parser.add_argument("-db", "--database", help="database", action="store",
-                        type=str, default=None)
+    parser.add_argument("-d", "--database", help="database", action="store",
+                        type=str, required=True)
     parser.add_argument("-t", "--table", help="table", action="store",
-                        type=str, default=None)
+                        type=str, required=True)
 
-    parser.add_argument("-ps", "--partitions", help="k1=v1,k2=v2,k3=v3", action="store",
+    parser.add_argument("-p", "--partitions", help="k1=v1,k2=v2,k3=v3", action="store",
                         type=str, default=None)
 
     parser.add_argument("-l", "--location", help="location", action="store",
                         type=str, default=None)
-    # parser.add_argument("-o", "--override", help="override", action="store",
-    #                     type=bool, default=False)
+    parser.add_argument("-o", "--override", help="override", action="store",
+                        type=bool, default=False)
 
     args = parser.parse_args()
 
