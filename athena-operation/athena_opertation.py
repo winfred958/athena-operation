@@ -47,6 +47,9 @@ class AddPartitionRequest(object):
         self.location = location
         self.override = override
 
+    def __str__(self):
+        return json.dumps(self, default=lambda o: o.__dict__, sort_keys=True, indent=4)
+
 
 def check(
         request  # type: AddPartitionRequest
@@ -57,7 +60,7 @@ def check(
 
 if __name__ == '__main__':
     request = get_parse_args()
-    log.info("request: {}".format(json.dumps(request)))
+    log.info("request: {}".format(request.__str__()))
     athena_alter = AthenaAlter(database=request.database, table=request.table, partition_str=request.partitions,
                                location=request.location)
     try:
