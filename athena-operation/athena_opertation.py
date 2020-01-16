@@ -1,6 +1,7 @@
 # encoding: utf-8
 
 import argparse
+import json
 
 from ddl.alter_partition import AthenaAlter
 from utils.log_utils import LogUtil
@@ -56,7 +57,7 @@ def check(
 
 if __name__ == '__main__':
     request = get_parse_args()
-    log.info("request: {}".format(request))
+    log.info("request: {}".format(json.dump(request)))
     athena_alter = AthenaAlter(database=request.database, table=request.table, partition_str=request.partitions,
                                location=request.location)
     try:
