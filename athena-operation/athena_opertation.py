@@ -44,10 +44,19 @@ class AddPartitionRequest(object):
         self.override = override
 
 
+def check(
+        request  # type: AddPartitionRequest
+):
+    if request.database is None or request.table is None:
+        raise Exception("Invalid request")
+
+
 if __name__ == '__main__':
     request = get_parse_args()
     athena_alter = AthenaAlter(database=request.database, table=request.table, partition_str=request.partitions,
                                location=request.location)
+    check(request)
+
     if request.override:
         athena_alter.drop_partition()
         athena_alter.add_partition()
