@@ -41,3 +41,7 @@ sh ./bin/add_partition.sh \
  --override
 ```
 ### 4.2 batch execute from config file
+ ```shell script
+sh ./bin/add_partition.sh \
+ -ac
+```

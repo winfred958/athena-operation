@@ -1,9 +1,9 @@
 # encoding: utf-8
 
 import argparse
-import json
 
 from ddl.alter_partition import AthenaAlter
+from entity.add_partition_request import AddPartitionRequest
 from utils.log_utils import LogUtil
 
 log = LogUtil()
@@ -13,7 +13,7 @@ def get_parse_args():
     # 获取参数
     parser = argparse.ArgumentParser(description="athena operation")
     parser.add_argument("-ac", "--all-config", help="load partition info from config file", action="store",
-                        type=str, default=None, required=False)
+                        type=bool, default=False, required=False)
     parser.add_argument("-d", "--database", help="database", action="store",
                         type=str, required=False)
     parser.add_argument("-t", "--table", help="table", action="store",
@@ -39,18 +39,6 @@ def get_parse_args():
     )
 
 
-class AddPartitionRequest(object):
-    def __init__(self, database, table, partitions, location, override):
-        self.database = database
-        self.table = table
-        self.partitions = partitions
-        self.location = location
-        self.override = override
-
-    def __str__(self):
-        return json.dumps(self, default=lambda o: o.__dict__, sort_keys=True, indent=4)
-
-
 def check(
         request  # type: AddPartitionRequest
 ):
@@ -61,13 +49,11 @@ def check(
 if __name__ == '__main__':
     request = get_parse_args()
     log.info("request: {}".format(request.__str__()))
-    athena_alter = AthenaAlter(database=request.database, table=request.table, partition_str=request.partitions,
-                               location=request.location)
+    athena_alter = AthenaAlter(request=request)
     try:
         check(request)
         if request.override:
-            athena_alter.drop_partition()
-            athena_alter.add_partition()
+            athena_alter.add_partition_override()
         else:
             athena_alter.add_partition()
         athena_alter.refresh_partition()
