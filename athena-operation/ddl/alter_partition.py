@@ -1,6 +1,9 @@
 # encoding: utf-8
 from connector.base_dao import BaseDao
 from entity.add_partition_request import AddPartitionRequest
+from utils.log_utils import LogUtil
+
+log = LogUtil()
 
 
 class AthenaAlter(BaseDao):
@@ -13,24 +16,25 @@ class AthenaAlter(BaseDao):
                  properties=dict
                  ):
         super(AthenaAlter, self).__init__(database=request.database, table=request.table)
+        self.request = request
         self.partition_str = request.partitions
         self.location = request.location
         self.properties = properties
 
-    def add_partition(self,
-                      add_partition_request  # type: AddPartitionRequest
-                      ):
-        if add_partition_request.all_config:
-            # 读取配置
-            pass
-        else:
-            self.add_partition_override()
-
-    def add_partition_override(self):
-        self.drop_partition()
-        self.add_partition()
-
     def add_partition(self):
+        if self.request.override:
+            self.__add_partition_override()
+        else:
+            self.__add_partition()
+
+    def __add_partition_from_config_file(self):
+        pass
+
+    def __add_partition_override(self):
+        self.__drop_partition()
+        self.__add_partition()
+
+    def __add_partition(self):
         """
 
         :return:
@@ -50,7 +54,7 @@ class AthenaAlter(BaseDao):
             )
         self.execute_sql(sql)
 
-    def drop_partition(self):
+    def __drop_partition(self):
         """
 
         :return:
@@ -64,7 +68,7 @@ class AthenaAlter(BaseDao):
         )
         self.execute_sql(sql)
 
-    def refresh_partition(self):
+    def __refresh_partition(self):
         sql = "MSCK REPAIR TABLE {database}.{table}".format(database=self.database, table=self.table)
         self.execute_sql(sql)
 

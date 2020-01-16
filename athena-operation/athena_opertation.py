@@ -49,13 +49,11 @@ def check(
 if __name__ == '__main__':
     request = get_parse_args()
     log.info("request: {}".format(request.__str__()))
-    athena_alter = AthenaAlter(request=request)
+
     try:
         check(request)
-        if request.override:
-            athena_alter.add_partition_override()
-        else:
-            athena_alter.add_partition()
-        athena_alter.refresh_partition()
     except Exception:
         log.error("[failed] : {}", Exception)
+
+    athena_alter = AthenaAlter(request=request)
+    athena_alter.add_partition()
