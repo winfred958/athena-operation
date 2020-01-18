@@ -48,7 +48,7 @@ def check(
 
 if __name__ == '__main__':
     request = get_parse_args()
-    log.info("request: {}".format(request.__str__()))
+    log.info("[ request ]: {}".format(request.__str__()))
 
     try:
         check(request)

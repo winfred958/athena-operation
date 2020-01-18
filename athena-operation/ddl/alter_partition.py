@@ -26,8 +26,13 @@ class AthenaAlter(BaseDao):
             self.__add_partition_override()
         else:
             self.__add_partition()
+        self.__refresh_partition()
 
     def __add_partition_from_config_file(self):
+        """
+        FIXME: 暂未实现
+        :return:
+        """
         pass
 
     def __add_partition_override(self):
@@ -36,7 +41,7 @@ class AthenaAlter(BaseDao):
 
     def __add_partition(self):
         """
-
+        add partition
         :return:
         """
         if self.location is None:
@@ -56,7 +61,7 @@ class AthenaAlter(BaseDao):
 
     def __drop_partition(self):
         """
-
+        drop partition
         :return:
         """
 
@@ -69,6 +74,10 @@ class AthenaAlter(BaseDao):
         self.execute_sql(sql)
 
     def __refresh_partition(self):
+        """
+        refresh partition
+        :return:
+        """
         sql = "MSCK REPAIR TABLE {database}.{table}".format(database=self.database, table=self.table)
         self.execute_sql(sql)
 
