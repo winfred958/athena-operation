@@ -50,7 +50,7 @@ class AthenaConnector(object):
         ResultConfiguration:
         :return:
         """
-        self.get_athena_connector().start_query_execution(**request.get_parameter())
+        self.get_athena_connector().start_query_execution(**request.get_request_object())
 
 
 class AthenaRequestEntity(object):
@@ -60,7 +60,7 @@ class AthenaRequestEntity(object):
         self.database = database
         self.result_path = result_path
 
-    def get_parameter(self):
+    def get_request_object(self):
         query_execution_context = {
             "Database": self.database
         }
