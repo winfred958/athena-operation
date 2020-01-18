@@ -20,7 +20,7 @@ class BaseDao(object):
 
     def execute_sql(self, sql):
         result_path = self.__get_result_path(tag=self.get_operation_tag())
-        log.info("[athena execute sql]: {} \n; result_path = {}".format(sql, result_path))
+        log.info("[athena execute sql]: {} ;\nresult_path = {}".format(sql, result_path))
         request = AthenaRequestEntity(
             sql=sql,
             database=self.database,
