@@ -19,15 +19,9 @@ class AthenaConnector(object):
 
     def get_athena_connector(self):
         """
-
+        athena connector
         :return: athena
         """
-
-        # def client(self, service_name, region_name=None, api_version=None,
-        #            use_ssl=True, verify=None, endpoint_url=None,
-        #            aws_access_key_id=None, aws_secret_access_key=None,
-        #            aws_session_token=None, config=None):
-
         conf = {
             "service_name": "athena",
             "region_name": self.region_name,
@@ -43,7 +37,7 @@ class AthenaConnector(object):
             request  # type: AthenaRequestEntity
     ):
         """
-
+        execute sql
         :param content:
         QueryString : sql
         QueryExecutionContext: database
