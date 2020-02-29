@@ -22,7 +22,7 @@ def get_parse_args():
     parser.add_argument("-p", "--partitions", help="k1=v1,k2=v2,k3=v3", action="store",
                         type=str, default=None)
 
-    parser.add_argument("-l", "--location", help="location", action="store",
+    parser.add_argument("-l", "--location", help="location: s3://xxxx/database/table/dt=%Y-%m-%d", action="store",
                         type=str, default=None)
 
     parser.add_argument("-o", "--override", help="override", action="store",

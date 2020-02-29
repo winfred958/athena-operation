@@ -1,5 +1,5 @@
 # encoding: utf-8
-
+import datetime
 import unittest
 
 from ddl.alter_partition import AthenaAlter
@@ -22,3 +22,8 @@ class AthenaAlterTest(unittest.TestCase):
 
         athena_alter = AthenaAlter(request=request)
         athena_alter.add_partition()
+
+    def test_datetime(self):
+        now = datetime.datetime.now()
+        print(now.strftime("year=%Y,month=%m,day=%d"))
+        print(now.strftime("location: s3://xxxx/database/table/dt=%Y-%m-%d"))
