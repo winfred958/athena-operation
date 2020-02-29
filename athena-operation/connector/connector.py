@@ -38,7 +38,7 @@ class AthenaConnector(object):
     ):
         """
         execute sql
-        :param content:
+        :param request:
         QueryString : sql
         QueryExecutionContext: database
         ResultConfiguration:

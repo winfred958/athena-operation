@@ -54,6 +54,7 @@ if __name__ == '__main__':
         check(request)
     except Exception:
         log.error("[failed] : {}", Exception)
+        raise Exception
 
     athena_alter = AthenaAlter(request=request)
     athena_alter.add_partition()
