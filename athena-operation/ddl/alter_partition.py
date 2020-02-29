@@ -17,8 +17,8 @@ class AthenaAlter(BaseDao):
                  ):
         super(AthenaAlter, self).__init__(database=request.database, table=request.table)
         self.request = request
-        self.partition_str = request.partitions
-        self.location = request.location
+        self.partition_str = request.partition_format
+        self.location = request.location_format
         self.properties = properties
 
     def add_partition(self):
@@ -42,6 +42,11 @@ class AthenaAlter(BaseDao):
     def __add_partition(self):
         """
         add partition
+
+        eg.
+            ALTER TABLE orders ADD
+            PARTITION (dt = '2016-05-14', country = 'IN') LOCATION 's3://mystorage/path/to/INDIA_14_May_2016/'
+            PARTITION (dt = '2016-05-15', country = 'IN') LOCATION 's3://mystorage/path/to/INDIA_15_May_2016/';
         :return:
         """
         if self.location is None:
@@ -62,9 +67,12 @@ class AthenaAlter(BaseDao):
     def __drop_partition(self):
         """
         drop partition
+
+        eg.
+            ALTER TABLE orders
+            DROP PARTITION (dt = '2014-05-14', country = 'IN'), PARTITION (dt = '2014-05-15', country = 'IN');
         :return:
         """
-
         sql = "ALTER TABLE {database}.{table} DROP IF EXISTS PARTITION ({partition})".format(
             database=self.database,
             table=self.table,

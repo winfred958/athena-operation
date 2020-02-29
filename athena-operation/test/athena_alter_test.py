@@ -15,8 +15,8 @@ class AthenaAlterTest(unittest.TestCase):
         request = AddPartitionRequest(
             database="ods",
             table="xxx",
-            partitions="dt='2020-01-20'",
-            location="s3://xxx/xx/xxx",
+            partition_format="dt='2020-01-20'",
+            location_format="s3://xxx/xx/xxx",
             override=True
         )
 
