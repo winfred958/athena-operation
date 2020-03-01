@@ -118,7 +118,7 @@ class AthenaAlter(BaseDao):
                 )
             partition_list.append(sub_str)
             start_date = start_date + datetime.timedelta(days=1)
-        return ",".join(partition_list)
+        return ", ".join(partition_list)
 
     def get_operation_tag(self):
         return "alert_partition"
