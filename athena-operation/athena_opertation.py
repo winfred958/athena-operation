@@ -69,11 +69,6 @@ if __name__ == '__main__':
     request = get_parse_args()
     log.info("[ request ]: {}".format(request.__str__()))
 
-    try:
-        check(request)
-    except Exception:
-        log.error("[failed] : {}", Exception)
-        raise Exception
-
+    check(request)
     athena_alter = AthenaAlter(request=request)
     athena_alter.add_partition()
