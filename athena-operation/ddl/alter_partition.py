@@ -1,4 +1,6 @@
 # encoding: utf-8
+import datetime
+
 from connector.base_dao import BaseDao
 from entity.add_partition_request import AddPartitionRequest
 from utils.log_utils import LogUtil
@@ -17,9 +19,10 @@ class AthenaAlter(BaseDao):
                  ):
         super(AthenaAlter, self).__init__(database=request.database, table=request.table)
         self.request = request
-        self.partition_str = request.partition_format
-        self.location = request.location_format
         self.properties = properties
+        #
+        # self.start_date = self.request.start_date
+        # self.end_date = self.request.end_date
 
     def add_partition(self):
         if self.request.override:
@@ -49,19 +52,16 @@ class AthenaAlter(BaseDao):
             PARTITION (dt = '2016-05-15', country = 'IN') LOCATION 's3://mystorage/path/to/INDIA_15_May_2016/';
         :return:
         """
-        if self.location is None:
-            sql = "ALTER TABLE {database}.{table} ADD IF NOT EXISTS PARTITION ({partition})'".format(
-                database=self.database,
-                table=self.table,
-                partition=self.partition_str
-            )
+        if self.request.location_format is not None:
+            partitions = self.__get_partition(with_location=True)
         else:
-            sql = "ALTER TABLE {database}.{table} ADD IF NOT EXISTS PARTITION ({partition}) LOCATION '{location}'".format(
-                database=self.database,
-                table=self.table,
-                partition=self.partition_str,
-                location=self.location
-            )
+            partitions = self.__get_partition()
+        sql = "ALTER TABLE {database}.{table} ADD IF NOT EXISTS {partitions}'".format(
+            database=self.database,
+            table=self.table,
+            partitions=partitions
+        )
+        log.debug("[SQL]: {}".format(sql))
         self.execute_sql(sql)
 
     def __drop_partition(self):
@@ -69,16 +69,17 @@ class AthenaAlter(BaseDao):
         drop partition
 
         eg.
-            ALTER TABLE orders
-            DROP PARTITION (dt = '2014-05-14', country = 'IN'), PARTITION (dt = '2014-05-15', country = 'IN');
+            ALTER TABLE orders DROP
+            PARTITION (dt = '2014-05-14', country = 'IN'),
+            PARTITION (dt = '2014-05-15', country = 'IN');
         :return:
         """
-        sql = "ALTER TABLE {database}.{table} DROP IF EXISTS PARTITION ({partition})".format(
+        sql = "ALTER TABLE {database}.{table} DROP IF EXISTS {partitions}".format(
             database=self.database,
             table=self.table,
-            partition=self.partition_str,
-            location=self.location
+            partitions=self.__get_partition()
         )
+        log.debug("[SQL]: {}".format(sql))
         self.execute_sql(sql)
 
     def __refresh_partition(self):
@@ -87,7 +88,35 @@ class AthenaAlter(BaseDao):
         :return:
         """
         sql = "MSCK REPAIR TABLE {database}.{table}".format(database=self.database, table=self.table)
+        log.debug("[SQL]: {}".format(sql))
         self.execute_sql(sql)
 
-    def get_operation_tag(self):
-        return "alert_partition"
+    def __get_partition(self,
+                        with_location=False
+                        ):
+        """
+        :param :
+        :return:
+        """
+        str_format = "PARTITION ({partition_kv})"
+        str_format_with_location = "PARTITION ({partition_kv}) LOCATION '{location}'"
+
+        start_date = self.request.start_date
+        end_date = self.request.end_date
+        partition_format = str(self.request.partition_format)
+        location_format = self.request.location_format
+        partition_list = list()
+
+        while start_date <= end_date:
+            partition_kv = start_date.strftime(partition_format)
+            location = start_date.strftime(location_format)
+            sub_str = str_format.format(partition_kv=partition_kv)
+            if with_location:
+                sub_str = str_format_with_location = str_format_with_location \
+                    .format(partition_kv=partition_kv, location=location)
+            partition_list.append(sub_str)
+            start_date = start_date + datetime.timedelta(days=1)
+        return ",".join(partition_list)
+
+        def get_operation_tag(self):
+            return "alert_partition"

@@ -22,7 +22,8 @@ def get_parse_args():
     parser.add_argument("-t", "--table", help="table", action="store",
                         type=str, required=False)
 
-    parser.add_argument("-pf", "--partition-format", help="eg. year='%Y',month='%m',day='%d' OR dt='%Y-%m-%d'", action="store",
+    parser.add_argument("-pf", "--partition-format", help="eg. year='%Y',month='%m',day='%d' OR dt='%Y-%m-%d'",
+                        action="store",
                         type=str, default=None)
 
     parser.add_argument("-lf", "--location-format",
@@ -41,13 +42,16 @@ def get_parse_args():
 
     args = parser.parse_args()
 
+    start_date = datetime.datetime.strptime(args.start_date, "%Y-%m-%d")
+    end_date = datetime.datetime.strptime(args.end_date, "%Y-%m-%d")
+
     return AddPartitionRequest(
         database=args.database,
         table=args.table,
         partition_format=args.partition_format,
         location_format=args.location_format,
-        start_date=args.start_date,
-        end_date=args.end_date,
+        start_date=start_date,
+        end_date=end_date,
         override=args.override
     )
 

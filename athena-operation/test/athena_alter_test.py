@@ -14,9 +14,11 @@ class AthenaAlterTest(unittest.TestCase):
     def test_add_partition(self):
         request = AddPartitionRequest(
             database="ods",
-            table="xxx",
-            partition_format="dt='2020-01-20'",
-            location_format="s3://xxx/xx/xxx",
+            table="test",
+            partition_format="dt='%Y-%m-%d'",
+            location_format="s3://xxx/xx/%Y/%m/%d",
+            start_date=datetime.datetime.strptime("2020-02-28", "%Y-%m-%d"),
+            end_date=datetime.datetime.strptime("2020-03-01", "%Y-%m-%d"),
             override=True
         )
 
@@ -26,4 +28,14 @@ class AthenaAlterTest(unittest.TestCase):
     def test_datetime(self):
         now = datetime.datetime.now()
         print(now.strftime("year=%Y,month=%m,day=%d"))
-        print(now.strftime("location: s3://xxxx/database/table/dt=%Y-%m-%d"))
+        print(now.strftime("year=%Y,month=%m,day=%d location: s3://xxxx/database/table/dt=%Y-%m-%d"))
+
+        print(datetime.datetime.strptime("2020-03-01", "%Y-%m-%d"))
+
+    def test_datetime_compare(self):
+        now = datetime.datetime.now()
+        yesterday = datetime.datetime.now() - datetime.timedelta(days=1)
+        print(type(now))
+        print(type(yesterday))
+        if now > yesterday:
+            print("xxxxxxxxxxx")

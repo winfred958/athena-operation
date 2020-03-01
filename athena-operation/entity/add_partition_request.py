@@ -3,7 +3,16 @@ import json
 
 
 class AddPartitionRequest(object):
-    def __init__(self, database, table, partition_format, location_format, start_date, end_date, override, all_config=False):
+    def __init__(self,
+                 database,
+                 table,
+                 partition_format,  # type str
+                 location_format,  # type str
+                 start_date,  # type datetime
+                 end_date,  # type datetime
+                 override,  # type boolean
+                 all_config=False
+                 ):
         self.database = database
         self.table = table
         self.partition_format = partition_format
