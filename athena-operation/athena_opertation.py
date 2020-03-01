@@ -61,6 +61,8 @@ def check(
 ):
     if request.database is None or request.table is None:
         raise Exception("Invalid request")
+    if request.start_date > request.end_date:
+        raise Exception("Invalid request")
 
 
 if __name__ == '__main__':

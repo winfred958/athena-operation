@@ -10,7 +10,7 @@ log = LogUtil()
 
 class AthenaAlter(BaseDao):
     """
-
+    
     """
 
     def __init__(self,
@@ -20,9 +20,6 @@ class AthenaAlter(BaseDao):
         super(AthenaAlter, self).__init__(database=request.database, table=request.table)
         self.request = request
         self.properties = properties
-        #
-        # self.start_date = self.request.start_date
-        # self.end_date = self.request.end_date
 
     def add_partition(self):
         if self.request.override:
@@ -87,7 +84,10 @@ class AthenaAlter(BaseDao):
         refresh partition
         :return:
         """
-        sql = "MSCK REPAIR TABLE {database}.{table}".format(database=self.database, table=self.table)
+        sql = "MSCK REPAIR TABLE {database}.{table}".format(
+            database=self.database,
+            table=self.table
+        )
         log.debug("[SQL]: {}".format(sql))
         self.execute_sql(sql)
 
@@ -112,11 +112,13 @@ class AthenaAlter(BaseDao):
             location = start_date.strftime(location_format)
             sub_str = str_format.format(partition_kv=partition_kv)
             if with_location:
-                sub_str = str_format_with_location = str_format_with_location \
-                    .format(partition_kv=partition_kv, location=location)
+                sub_str = str_format_with_location = str_format_with_location.format(
+                    partition_kv=partition_kv,
+                    location=location
+                )
             partition_list.append(sub_str)
             start_date = start_date + datetime.timedelta(days=1)
         return ",".join(partition_list)
 
-        def get_operation_tag(self):
-            return "alert_partition"
+    def get_operation_tag(self):
+        return "alert_partition"
