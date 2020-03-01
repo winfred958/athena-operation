@@ -60,9 +60,9 @@ def check(
         request  # type: AddPartitionRequest
 ):
     if request.database is None or request.table is None:
-        raise Exception("Invalid request")
+        raise Exception("Invalid request: database table missing")
     if request.start_date > request.end_date:
-        raise Exception("Invalid request")
+        raise Exception("Invalid request: start-date > end-date")
 
 
 if __name__ == '__main__':
