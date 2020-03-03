@@ -74,12 +74,12 @@ def get_parse_args():
     try:
         start_date = datetime.datetime.strptime(start_date_str, "%Y-%m-%d")
     except Exception:
-        log.error(" start date format error")
+        log.error(" start date format error. use default now()")
         start_date = datetime.datetime.now()
     try:
         end_date = datetime.datetime.strptime(end_date_str, "%Y-%m-%d")
     except Exception:
-        log.error(" end date format error")
+        log.error(" end date format error. use default now()")
         end_date = datetime.datetime.now()
 
     return AddPartitionRequest(
