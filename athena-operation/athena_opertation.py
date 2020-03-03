@@ -18,16 +18,16 @@ def get_parse_args():
                         type=bool, default=False, required=False)
 
     parser.add_argument("-d", "--database", help="database", action="store",
-                        type=str, required=True)
+                        type=str)
     parser.add_argument("-t", "--table", help="table", action="store",
-                        type=str, required=True)
+                        type=str)
 
     parser.add_argument("-pf", "--partition-format", help="eg. "
                                                           "year='%%Y',month='%%m',day='%%d' "
                                                           "OR "
                                                           "dt='%%Y-%%m-%%d'",
                         action="store",
-                        type=str, default=None, required=True)
+                        type=str, default=None)
 
     parser.add_argument("-lf", "--location-format",
                         help="eg. "
