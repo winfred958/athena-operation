@@ -43,8 +43,8 @@ eg. 1
 sh ./bin/add_partition.sh \
  --database <database> \
  --table <table> \
- --partitions "dt='%Y-%m-%d'" \
- --location "s3://xxx-region/xxxx/<database>/<table>/%Y/%m/%d" \
+ --partition-format "dt='%Y-%m-%d'" \
+ --location-format "s3://xxx-region/xxxx/<database>/<table>/%Y/%m/%d" \
  --start-date 2020-03-01 \
  --end-date  2020-03-03 \
  --override
@@ -54,8 +54,8 @@ eg. 2
 sh ./bin/add_partition.sh \
  --database <database> \
  --table <table> \
- --partitions "year='%Y', month='%m', day='%d'" \
- --location "s3://xxx-region/xxxx/<database>/<table>/%Y/%m/%d" \
+ --partition-format "year='%Y', month='%m', day='%d'" \
+ --location-format "s3://xxx-region/xxxx/<database>/<table>/%Y/%m/%d" \
  --start-date 2020-03-01 \
  --end-date  2020-03-03 \
  --override
