@@ -1,4 +1,5 @@
 # encoding: utf-8
+import datetime
 import json
 
 
@@ -23,4 +24,10 @@ class AddPartitionRequest(object):
         self.all_config = all_config
 
     def __str__(self):
-        return json.dumps(self, default=lambda o: o.__dict__, sort_keys=True, indent=4)
+        return json.dumps(self, default=self.json_default, sort_keys=True, indent=4)
+
+    def json_default(self, value):
+        if isinstance(value, datetime.datetime):
+            return value.strftime("%Y-%m-%d %H:%M:%S")
+        else:
+            return value.__dict__
