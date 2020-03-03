@@ -7,4 +7,4 @@ athena_s3_result_tmp_path = "s3://yamibuy-oregon/athena/sql_result"
 
 LOG_DIR_NAME = "log"
 LOG_FILE_NAME = "athena-operation.log"
-LOG_LEVEL = logging.DEBUG
+LOG_LEVEL = logging.INFO
