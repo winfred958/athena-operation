@@ -14,19 +14,19 @@ def get_parse_args():
     # 获取参数
     parser = argparse.ArgumentParser(description="athena operation")
 
-    parser.add_argument("-ac", "--all-config", help="load partition info from config file, 未实现", action="store",
+    parser.add_argument("-ac", "--all-config", help="load partition info from config file, 未实现", action="store_true",
                         type=bool, default=False, required=False)
 
-    parser.add_argument("-d", "--database", help="database", action="store",
+    parser.add_argument("-d", "--database", help="database", action="store_true",
                         type=str)
-    parser.add_argument("-t", "--table", help="table", action="store",
+    parser.add_argument("-t", "--table", help="table", action="store_true",
                         type=str)
 
     parser.add_argument("-pf", "--partition-format", help="eg. "
                                                           "year='%%Y',month='%%m',day='%%d' "
                                                           "OR "
                                                           "dt='%%Y-%%m-%%d'",
-                        action="store",
+                        action="store_true",
                         type=str, default=None)
 
     parser.add_argument("-lf", "--location-format",
@@ -35,27 +35,44 @@ def get_parse_args():
                              "s3://xxxx/database/table/dt=%%Y-%%m-%%d "
                              "OR "
                              "s3://xxxx/database/table/%%Y/%%m/%%d",
-                        action="store",
+                        action="store_true",
                         type=str, default=None, required=False)
 
-    parser.add_argument("-sd", "--start-date", help="eg. 2020-02-28", action="store",
-                        type=str, default=datetime.datetime.now().strftime("%Y-%m-%d"))
+    parser.add_argument("-sd", "--start-date", help="eg. 2020-02-28", action="store_true",
+                        type=str, default=None)
 
-    parser.add_argument("-ed", "--end-date", help="eg. 2020-02-29", action="store",
-                        type=str, default=datetime.datetime.now().strftime("%Y-%m-%d"))
+    parser.add_argument("-ed", "--end-date", help="eg. 2020-02-29", action="store_true",
+                        type=str, default=None)
 
-    parser.add_argument("-o", "--override", help="override", action="store",
+    parser.add_argument("-o", "--override", help="partition override", action="store_true",
                         type=bool, default=False, required=False)
 
     try:
-        parser.parse_known_args()
+        known_args = parser.parse_known_args()
+        log.info(known_args.__dict__)
     except Exception:
         log.error(parser.parse_known_args())
 
     args = parser.parse_args()
 
-    start_date = datetime.datetime.strptime(args.start_date, "%Y-%m-%d")
-    end_date = datetime.datetime.strptime(args.end_date, "%Y-%m-%d")
+    start_date_str = args.start_date
+    end_date_str = args.end_date
+
+    if start_date_str is None:
+        start_date_str = datetime.datetime.now().strftime("%Y-%m-%d")
+    if end_date_str is None:
+        end_date_str = datetime.datetime.now().strftime("%Y-%m-%d")
+
+    try:
+        start_date = datetime.datetime.strptime(start_date_str, "%Y-%m-%d")
+    except Exception:
+        log.error(" start date format error")
+        start_date = datetime.datetime.now()
+    try:
+        end_date = datetime.datetime.strptime(end_date_str, "%Y-%m-%d")
+    except Exception:
+        log.error(" end date format error")
+        end_date = datetime.datetime.now()
 
     return AddPartitionRequest(
         database=args.database,
