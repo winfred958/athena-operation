@@ -59,7 +59,7 @@ class AthenaAlter(BaseDao):
             partitions=partitions
         )
         log.debug("[SQL]: {}".format(sql))
-        # self.execute_sql(sql)
+        self.execute_sql(sql)
 
     def __drop_partition(self):
         """
@@ -77,7 +77,7 @@ class AthenaAlter(BaseDao):
             partitions=self.__get_partition()
         )
         log.debug("[SQL]: {}".format(sql))
-        # self.execute_sql(sql)
+        self.execute_sql(sql)
 
     def __refresh_partition(self):
         """
@@ -89,7 +89,7 @@ class AthenaAlter(BaseDao):
             table=self.table
         )
         log.debug("[SQL]: {}".format(sql))
-        # self.execute_sql(sql)
+        self.execute_sql(sql)
 
     def __get_partition(self,
                         with_location=False
