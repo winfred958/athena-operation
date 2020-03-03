@@ -52,7 +52,7 @@ def get_parse_args():
     parser.add_argument("-ed", "--end-date", help="eg. 2020-02-29", action="store",
                         type=str, default=None)
 
-    parser.add_argument("-o", "--override", help="partition override", action="store",
+    parser.add_argument("-o", "--overwrite", help="overwrite", action="store",
                         type=bool, default=False, required=False)
 
     try:
@@ -89,7 +89,7 @@ def get_parse_args():
         location_format=args.location_format,
         start_date=start_date,
         end_date=end_date,
-        override=args.override
+        overwrite=args.overwrite
     )
 
 

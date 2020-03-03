@@ -22,7 +22,7 @@ class AthenaAlter(BaseDao):
         self.properties = properties
 
     def add_partition(self):
-        if self.request.override:
+        if self.request.overwrite:
             self.__add_partition_override()
         else:
             self.__add_partition()

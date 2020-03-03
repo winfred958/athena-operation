@@ -11,7 +11,7 @@ class AddPartitionRequest(object):
                  location_format,  # type str
                  start_date,  # type datetime
                  end_date,  # type datetime
-                 override,  # type boolean
+                 overwrite=True,  # type boolean
                  all_config=False
                  ):
         self.database = database
@@ -20,7 +20,7 @@ class AddPartitionRequest(object):
         self.location_format = location_format
         self.start_date = start_date
         self.end_date = end_date
-        self.override = override
+        self.overwrite = overwrite
         self.all_config = all_config
 
     def __str__(self):

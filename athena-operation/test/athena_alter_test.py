@@ -19,7 +19,7 @@ class AthenaAlterTest(unittest.TestCase):
             location_format="s3://xxx/xx/%Y/%m/%d",
             start_date=datetime.datetime.strptime("2020-02-28", "%Y-%m-%d"),
             end_date=datetime.datetime.strptime("2020-03-01", "%Y-%m-%d"),
-            override=True
+            overwrite=True
         )
 
         athena_alter = AthenaAlter(request=request)
