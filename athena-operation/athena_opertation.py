@@ -47,9 +47,12 @@ def get_parse_args():
     parser.add_argument("-o", "--override", help="override", action="store",
                         type=bool, default=False, required=False)
 
-    args = parser.parse_args()
+    try:
+        parser.parse_known_args()
+    except Exception:
+        log.error(parser.parse_known_args())
 
-    log.info(args)
+    args = parser.parse_args()
 
     start_date = datetime.datetime.strptime(args.start_date, "%Y-%m-%d")
     end_date = datetime.datetime.strptime(args.end_date, "%Y-%m-%d")
