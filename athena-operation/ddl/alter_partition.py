@@ -50,9 +50,9 @@ class AthenaAlter(BaseDao):
         :return:
         """
         if self.request.location_format is not None:
-            partitions = self.__get_partition(with_location=True)
+            partitions = self.__get_partition(segmentation=" ", with_location=True)
         else:
-            partitions = self.__get_partition()
+            partitions = self.__get_partition(segmentation=" ")
         sql = "ALTER TABLE {database}.{table} ADD IF NOT EXISTS {partitions}".format(
             database=self.database,
             table=self.table,
@@ -74,7 +74,7 @@ class AthenaAlter(BaseDao):
         sql = "ALTER TABLE {database}.{table} DROP IF EXISTS {partitions}".format(
             database=self.database,
             table=self.table,
-            partitions=self.__get_partition()
+            partitions=self.__get_partition(segmentation=", ")
         )
         log.debug("[SQL]: {}".format(sql))
         self.execute_sql(sql)
@@ -92,6 +92,7 @@ class AthenaAlter(BaseDao):
         self.execute_sql(sql)
 
     def __get_partition(self,
+                        segmentation,  # type: str
                         with_location=False
                         ):
         """
@@ -118,7 +119,7 @@ class AthenaAlter(BaseDao):
                 )
             partition_list.append(sub_str)
             start_date = start_date + datetime.timedelta(days=1)
-        return ", ".join(partition_list)
+        return segmentation.join(partition_list)
 
     def get_operation_tag(self):
         return "alert_partition"
