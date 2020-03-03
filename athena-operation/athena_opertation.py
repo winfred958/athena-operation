@@ -14,8 +14,12 @@ def get_parse_args():
     # 获取参数
     parser = argparse.ArgumentParser(description="athena operation")
 
-    parser.add_argument("-ac", "--all-config", help="load partition info from config file, 未实现", action="store",
-                        type=bool, default=False, required=False)
+    # parser.add_argument("-ac", "--all-config",
+    #                     help="load partition info from config file, 未实现",
+    #                     action="store",
+    #                     type=bool, default=False,
+    #                     required=False
+    #                     )
 
     parser.add_argument("-d", "--database", help="database", action="store",
                         type=str)
@@ -27,7 +31,9 @@ def get_parse_args():
                                                           "OR "
                                                           "dt='%%Y-%%m-%%d'",
                         action="store",
-                        type=str, default=None)
+                        type=str,
+                        default=None
+                        )
 
     parser.add_argument("-lf", "--location-format",
                         help="eg. "
@@ -36,7 +42,9 @@ def get_parse_args():
                              "OR "
                              "s3://xxxx/database/table/%%Y/%%m/%%d",
                         action="store",
-                        type=str, default=None, required=False)
+                        type=str,
+                        default=None
+                        )
 
     parser.add_argument("-sd", "--start-date", help="eg. 2020-02-28", action="store",
                         type=str, default=None)
