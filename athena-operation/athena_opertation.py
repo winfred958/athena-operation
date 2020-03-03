@@ -22,9 +22,9 @@ def get_parse_args():
     #                     )
 
     parser.add_argument("-d", "--database", help="database", action="store",
-                        type=str)
+                        type=str, required=False)
     parser.add_argument("-t", "--table", help="table", action="store",
-                        type=str)
+                        type=str, required=False)
 
     parser.add_argument("-pf", "--partition-format", help="eg. "
                                                           "year='%%Y',month='%%m',day='%%d' "
