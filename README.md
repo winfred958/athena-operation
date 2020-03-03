@@ -1,12 +1,15 @@
 # athena-operation
 
 ## 1. clone
-  > * git clone xxx
-## 2. env config
+  > * git clone https://github.com/winfred958/athena-operation.git
+## 2. system env config
   > * export AWS_ACCESS_KEY_ID=xxx
   > * export AWS_SECRET_ACCESS_KEY=xxx
 ## 3. config
-  > * athena_s3_result_tmp_path
+  > * vim athena-operation/config/config.py
+  > > * region_name
+  > > * athena_s3_result_tmp_path
+  > > * LOG_LEVEL
 ## 4. use
 ### 4.1 show help
   > * sh ./bin/add_partition.sh --help
