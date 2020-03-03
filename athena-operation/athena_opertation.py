@@ -49,6 +49,8 @@ def get_parse_args():
 
     args = parser.parse_args()
 
+    log.info(args)
+
     start_date = datetime.datetime.strptime(args.start_date, "%Y-%m-%d")
     end_date = datetime.datetime.strptime(args.end_date, "%Y-%m-%d")
 

@@ -54,7 +54,7 @@ eg. 2
 sh ./bin/add_partition.sh \
  --database <database> \
  --table <table> \
- --partition-format "year='%Y', month='%m', day='%d'" \
+ --partition-format "year='%Y',month='%m',day='%d'" \
  --location-format "s3://xxx-region/xxxx/<database>/<table>/%Y/%m/%d" \
  --start-date 2020-03-01 \
  --end-date  2020-03-03 \
