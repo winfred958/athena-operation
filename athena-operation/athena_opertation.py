@@ -22,12 +22,12 @@ def get_parse_args():
     parser.add_argument("-t", "--table", help="table", action="store",
                         type=str, required=True)
 
-    parser.add_argument("-pf", "--partition-format", help="eg. year='%Y',month='%m',day='%d' OR dt='%Y-%m-%d'",
+    parser.add_argument("-pf", "--partition-format", help="eg. year='%%Y',month='%%m',day='%%d' OR dt='%%Y-%%m-%%d'",
                         action="store",
                         type=str, default=None, required=True)
 
     parser.add_argument("-lf", "--location-format",
-                        help="location: s3://xxxx/database/table/dt=%Y-%m-%d OR s3://xxxx/database/table/%Y/%m/%d",
+                        help="location: s3://xxxx/database/table/dt=%%Y-%%m-%%d OR s3://xxxx/database/table/%%Y/%%m/%%d",
                         action="store",
                         type=str, default=None, required=False)
 
