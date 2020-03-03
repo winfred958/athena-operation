@@ -22,19 +22,26 @@ def get_parse_args():
     parser.add_argument("-t", "--table", help="table", action="store",
                         type=str, required=True)
 
-    parser.add_argument("-pf", "--partition-format", help="eg. year='%%Y',month='%%m',day='%%d' OR dt='%%Y-%%m-%%d'",
+    parser.add_argument("-pf", "--partition-format", help="eg. "
+                                                          "year='%%Y',month='%%m',day='%%d' "
+                                                          "OR "
+                                                          "dt='%%Y-%%m-%%d'",
                         action="store",
                         type=str, default=None, required=True)
 
     parser.add_argument("-lf", "--location-format",
-                        help="location: s3://xxxx/database/table/dt=%%Y-%%m-%%d OR s3://xxxx/database/table/%%Y/%%m/%%d",
+                        help="eg. "
+                             "location: "
+                             "s3://xxxx/database/table/dt=%%Y-%%m-%%d "
+                             "OR "
+                             "s3://xxxx/database/table/%%Y/%%m/%%d",
                         action="store",
                         type=str, default=None, required=False)
 
-    parser.add_argument("-sd", "--start-date", help="2020-02-28", action="store",
+    parser.add_argument("-sd", "--start-date", help="eg. 2020-02-28", action="store",
                         type=str, default=datetime.datetime.now().strftime("%Y-%m-%d"))
 
-    parser.add_argument("-ed", "--end-date", help="2020-02-29", action="store",
+    parser.add_argument("-ed", "--end-date", help="eg. 2020-02-29", action="store",
                         type=str, default=datetime.datetime.now().strftime("%Y-%m-%d"))
 
     parser.add_argument("-o", "--override", help="override", action="store",
