@@ -26,7 +26,8 @@ class AddPartitionRequest(object):
     def __str__(self):
         return json.dumps(self, default=self.json_default, sort_keys=True, indent=4)
 
-    def json_default(self, value):
+    @staticmethod
+    def json_default(value):
         if isinstance(value, datetime.datetime):
             return value.strftime("%Y-%m-%d %H:%M:%S")
         else:
