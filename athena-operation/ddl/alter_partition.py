@@ -53,7 +53,7 @@ class AthenaAlter(BaseDao):
             partitions = self.__get_partition(with_location=True)
         else:
             partitions = self.__get_partition()
-        sql = "ALTER TABLE {database}.{table} ADD IF NOT EXISTS {partitions}'".format(
+        sql = "ALTER TABLE {database}.{table} ADD IF NOT EXISTS {partitions}".format(
             database=self.database,
             table=self.table,
             partitions=partitions
@@ -112,7 +112,7 @@ class AthenaAlter(BaseDao):
             location = start_date.strftime(location_format)
             sub_str = str_format.format(partition_kv=partition_kv)
             if with_location:
-                sub_str = str_format_with_location = str_format_with_location.format(
+                sub_str = str_format_with_location.format(
                     partition_kv=partition_kv,
                     location=location
                 )
