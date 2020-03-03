@@ -11,16 +11,14 @@
 ### 4.1 show help
   > * sh ./bin/add_partition.sh --help
 ```text
-usage: athena_opertation.py [-h] [-ac ALL_CONFIG] -d DATABASE -t TABLE -pf
-                            PARTITION_FORMAT [-lf LOCATION_FORMAT]
-                            [-sd START_DATE] [-ed END_DATE] [-o OVERRIDE]
+usage: athena_opertation.py [-h] [-d DATABASE] [-t TABLE]
+                            [-pf PARTITION_FORMAT] [-lf LOCATION_FORMAT]
+                            [-sd START_DATE] [-ed END_DATE] [-o OVERWRITE]
 
 athena operation
 
 optional arguments:
   -h, --help            show this help message and exit
-  -ac ALL_CONFIG, --all-config ALL_CONFIG
-                        load partition info from config file, 未实现
   -d DATABASE, --database DATABASE
                         database
   -t TABLE, --table TABLE
@@ -34,8 +32,8 @@ optional arguments:
                         eg. 2020-02-28
   -ed END_DATE, --end-date END_DATE
                         eg. 2020-02-29
-  -o OVERRIDE, --override OVERRIDE
-                        override
+  -o OVERWRITE, --overwrite OVERWRITE
+                        overwrite
 ```
 ### 4.2 simple to use
 eg. 1
@@ -47,7 +45,7 @@ sh ./bin/add_partition.sh \
  --location-format "s3://xxx-region/xxxx/<database>/<table>/%Y/%m/%d" \
  --start-date 2020-03-01 \
  --end-date  2020-03-03 \
- --override
+ --overwrite True
 ```
 eg. 2
 ```shell script
@@ -58,7 +56,7 @@ sh ./bin/add_partition.sh \
  --location-format "s3://xxx-region/xxxx/<database>/<table>/%Y/%m/%d" \
  --start-date 2020-03-01 \
  --end-date  2020-03-03 \
- --override
+--overwrite True
 ```
 
 ### 4.2 batch execute from config file (未实现)
