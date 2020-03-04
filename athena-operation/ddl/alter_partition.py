@@ -106,7 +106,7 @@ class AthenaAlter(BaseDao):
         end_date = self.request.end_date
         partition_format = str(self.request.partition_format)
         location_format = self.request.location_format
-        partition_list = list()
+        partition_set = set()
 
         while start_date <= end_date:
             partition_kv = start_date.strftime(partition_format)
@@ -117,9 +117,9 @@ class AthenaAlter(BaseDao):
                     partition_kv=partition_kv,
                     location=location
                 )
-            partition_list.append(sub_str)
+            partition_set.add(sub_str)
             start_date = start_date + datetime.timedelta(days=1)
-        return segmentation.join(partition_list)
+        return segmentation.join(partition_set)
 
     def get_operation_tag(self):
         return "alert_partition"
