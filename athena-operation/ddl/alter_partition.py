@@ -1,5 +1,6 @@
 # encoding: utf-8
 import datetime
+import time
 
 from connector.base_dao import BaseDao
 from entity.add_partition_request import AddPartitionRequest
@@ -37,6 +38,9 @@ class AthenaAlter(BaseDao):
 
     def __add_partition_override(self):
         self.__drop_partition()
+        pause_second = 15
+        log.info("[thread pause {} second]".format(pause_second))
+        time.sleep(pause_second)
         self.__add_partition()
 
     def __add_partition(self):
