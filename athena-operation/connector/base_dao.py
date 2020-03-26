@@ -27,7 +27,7 @@ class BaseDao(object):
         #     result_path=result_path
         # )
         # AthenaConnector().execute_sql(request)
-        log.info(os.system("java -jar {} {}".format(config.jar_file_path, sql)))
+        log.info(os.system("java -jar {} \"{}\"".format(config.jar_file_path, sql)))
 
     @staticmethod
     def __get_sub_path_name():
