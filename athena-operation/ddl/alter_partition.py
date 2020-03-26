@@ -27,7 +27,7 @@ class AthenaAlter(BaseDao):
             self.__add_partition_override()
         else:
             self.__add_partition()
-        self.__refresh_partition()
+        # self.__refresh_partition()
 
     def __add_partition_from_config_file(self):
         """
