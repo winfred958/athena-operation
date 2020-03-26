@@ -9,4 +9,4 @@ LOG_DIR_NAME = "log"
 LOG_FILE_NAME = "athena-operation.log"
 LOG_LEVEL = logging.INFO
 
-jar_file_path = "../lib/xxx.jar"
+jar_file_path = "./lib/*.jar"
