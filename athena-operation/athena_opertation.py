@@ -55,11 +55,11 @@ def get_parse_args():
     parser.add_argument("-o", "--overwrite", help="overwrite", action="store",
                         type=bool, default=False, required=False)
 
-    try:
-        known_args = parser.parse_known_args()
-        log.info(known_args.__dict__)
-    except Exception:
-        log.error(parser.parse_known_args())
+    # try:
+    #     known_args = parser.parse_known_args()
+    #     log.info(known_args.__dict__)
+    # except Exception:
+    #     log.error(parser.parse_known_args())
 
     args = parser.parse_args()
 
