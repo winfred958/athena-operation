@@ -1,9 +1,9 @@
 # encoding: utf-8
 import datetime
+import os
 from abc import abstractmethod
 
 from config import config
-from connector.connector import AthenaRequestEntity, AthenaConnector
 from utils.log_utils import LogUtil
 
 log = LogUtil()
@@ -21,12 +21,13 @@ class BaseDao(object):
     def execute_sql(self, sql):
         result_path = self.__get_result_path(tag=self.get_operation_tag())
         log.info("[athena execute sql]: {} ; result_path = {}".format(sql, result_path))
-        request = AthenaRequestEntity(
-            sql=sql,
-            database=self.database,
-            result_path=result_path
-        )
-        AthenaConnector().execute_sql(request)
+        # request = AthenaRequestEntity(
+        #     sql=sql,
+        #     database=self.database,
+        #     result_path=result_path
+        # )
+        # AthenaConnector().execute_sql(request)
+        os.system("java -jar {} {}".format(config.jar_file_path, sql))
 
     @staticmethod
     def __get_sub_path_name():
